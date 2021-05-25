@@ -5,7 +5,9 @@ const fs = require("fs");
 require("dotenv").config();
 
 const PixivAppApi = require("pixiv-app-api");
-const pixiv = new PixivAppApi(process.env.PIXIV_NAME, process.env.PIXIV_PASS);
+const pixiv = new PixivAppApi(process.env.PIXIV_NAME, process.env.PIXIV_PASS, {
+  camelcaseKeys: true,
+});
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -108,8 +110,10 @@ client.on("message", (message) => {
 
 client.login(process.env.DISCORD_TOKEN);
 
-loginPixiv = async () => {
-  await pixiv.login().then(console.log("Pixiv logged in"));
+const loginPixiv = async () => {
+  await pixiv.login().catch((error) => {
+    console.error(error);
+  });
 };
 
 loginPixiv();
