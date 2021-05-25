@@ -4,11 +4,6 @@ const axios = require("axios");
 const fs = require("fs");
 require("dotenv").config();
 
-const PixivAppApi = require("pixiv-app-api");
-const pixiv = new PixivAppApi(process.env.PIXIV_NAME, process.env.PIXIV_PASS, {
-  camelcaseKeys: true,
-});
-
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs
@@ -109,11 +104,3 @@ client.on("message", (message) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
-
-const loginPixiv = async () => {
-  await pixiv.login().catch((error) => {
-    console.error(error);
-  });
-};
-
-loginPixiv();
